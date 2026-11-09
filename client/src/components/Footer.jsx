@@ -5,6 +5,7 @@ import { FONT } from "../constants/ui";
 const LINKS = [
   { label: "Home", href: ROUTES.home },
   { label: "About", href: ROUTES.about },
+  { label: "How It Works", href: ROUTES.howItWorks },
   { label: "Contact", href: ROUTES.contact },
 ];
 
@@ -20,7 +21,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Footer" className="flex gap-8">
+          <nav aria-label="Footer" className="flex flex-wrap gap-8">
             {LINKS.map((l) => (
               <a
                 key={l.label}
@@ -35,9 +36,9 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-2 border-t border-white/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className={`${FONT.body} text-sm text-white/60`}>© 2026 DeepPlate. All rights reserved.</p>
+          <p className={`${FONT.body} text-sm text-white/60`}>© 2026 DeepPlate / PlateGuard. All rights reserved.</p>
           <p className={`${FONT.mono} text-xs font-bold uppercase tracking-[0.3em] text-white/40`}>
-            DP · 2026 · ANPR
+            DP · 2026 · ANPR · YOLO · PADDLEOCR
           </p>
         </div>
       </div>

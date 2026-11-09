@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Showcase from "../components/Showcase";
+import AboutSection from "../components/about/AboutSection";
 import Footer from "../components/Footer";
 import { FONT } from "../constants/ui";
 
@@ -19,6 +20,7 @@ export default function LandingPage() {
       <main>
         <Hero />
         <Showcase />
+        <AboutSection />
       </main>
       <Footer />
     </div>
