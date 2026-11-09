@@ -2,12 +2,14 @@ import examples from "../assets/number-plate-examples.png";
 import Reveal from "./Reveal";
 import Rivet from "./Rivet";
 import { FONT } from "../constants/ui";
+import { ROUTES } from "../constants/routes";
+import { ArrowRight } from "lucide-react";
 
 const TAGS = ["Blur", "Angle", "Low light", "Speed", "Low-res", "Icons", "Multi-vehicle", "2-row plates"];
 
 export default function Showcase() {
   return (
-    <section id="about" className="scroll-mt-20 bg-[#111111] text-white">
+    <section id="scenarios" className="scroll-mt-20 bg-[#111111] text-white">
       {/* Ticker strip */}
       <div aria-hidden="true" className="overflow-hidden border-y-4 border-[#111111] bg-[#FFD600] px-5 py-3">
         <div
@@ -54,8 +56,8 @@ export default function Showcase() {
           </figure>
         </Reveal>
 
-        {/* Scenario tags */}
-        <Reveal delay={250} className="mt-12">
+        {/* Scenario tags + link to About page problem breakdown */}
+        <Reveal delay={250} className="mt-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <ul className="flex flex-wrap gap-3">
             {TAGS.map((t) => (
               <li
@@ -66,6 +68,14 @@ export default function Showcase() {
               </li>
             ))}
           </ul>
+
+          <a
+            href={ROUTES.problem}
+            className={`${FONT.tech} inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-[#FFD600] underline-offset-4 hover:underline sm:text-base`}
+          >
+            Read Problem Statement & Solutions
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </Reveal>
       </div>
     </section>

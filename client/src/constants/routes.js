@@ -1,9 +1,15 @@
 // Central place for navigation targets.
-// `/predict` is where the separate prediction page will live.
 export const ROUTES = {
   home: "#home",
   about: "#about",
   howItWorks: "#how-it-works",
+  workflow: "#workflow",
+  scenarios: "#scenarios",
+  problem: "#problem",
+  solution: "#solution",
+  architecture: "#architecture",
+  outputs: "#outputs",
+  objectives: "#objectives",
   contact: "#contact",
   predict: "/predict",
 };
