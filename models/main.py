@@ -6,8 +6,8 @@ import argparse
 import json
 import logging
 
-from plateguard import PlateGuard
-from plateguard.config import PlateGuardConfig
+from models_pipeline import PlateGuard
+from models_pipeline.config import PlateGuardConfig
 
 
 def main():
@@ -24,7 +24,7 @@ def main():
     a = ap.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
-                        handlers=[logging.StreamHandler(), logging.FileHandler("plateguard.log")])
+                        handlers=[logging.StreamHandler(), logging.FileHandler("models.log")])
 
     cfg = PlateGuardConfig()
     cfg.detector.weights_path = a.weights

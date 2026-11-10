@@ -16,7 +16,7 @@ from .preprocess import preprocess
 from .results import PlateResult, deduplicate, merge_lines
 from .video_input import extract_frames
 
-log = logging.getLogger("plateguard")
+log = logging.getLogger("models")
 
 
 class PlateGuard:
