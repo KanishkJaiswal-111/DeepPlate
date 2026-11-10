@@ -1,0 +1,6 @@
+numpy
+opencv-python
+ultralytics          # YOLO + PyTorch
+paddlepaddle         # use paddlepaddle-gpu on CUDA machines
+paddleocr>=3.0
+pytest
