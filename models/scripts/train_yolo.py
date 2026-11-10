@@ -14,7 +14,7 @@ IMG_SIZE    = 640
 LR0         = 0.01
 OPTIMIZER   = "auto"                        # "SGD" | "Adam" | "AdamW" | "auto"
 SEED        = 42
-PROJECT     = "runs/plateguard"
+PROJECT     = "runs/models"
 RUN_NAME    = "plate_detector"
 DEVICE      = None                          # None=auto, "0", "cpu"
 # ------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ def main():
         # augmentation (train set only) -- tune as needed
         hsv_h=0.015, hsv_s=0.5, hsv_v=0.4, degrees=5, translate=0.1, scale=0.4, fliplr=0.0,
     )
-    # best weights (by validation) -> runs/plateguard/plate_detector/weights/best.pt
+    # best weights (by validation) -> runs/models/plate_detector/weights/best.pt
     # Final one-time test-set evaluation:
     best = YOLO(f"{PROJECT}/{RUN_NAME}/weights/best.pt")
     m = best.val(data=DATA_YAML, split="test", conf=0.001)

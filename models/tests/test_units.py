@@ -2,12 +2,12 @@
 import numpy as np
 import pytest
 
-from plateguard.config import CropConfig, PreprocessConfig, VideoConfig
-from plateguard.cropping import clamp_box, crop_plate
-from plateguard.ocr_engine import OCRLine
-from plateguard.preprocess import preprocess
-from plateguard.results import deduplicate, merge_lines, normalise_text, PlateResult
-from plateguard.video_input import VideoOpenError, validate_video
+from models_pipeline.config import CropConfig, PreprocessConfig, VideoConfig
+from models_pipeline.cropping import clamp_box, crop_plate
+from models_pipeline.ocr_engine import OCRLine
+from models_pipeline.preprocess import preprocess
+from models_pipeline.results import deduplicate, merge_lines, normalise_text, PlateResult
+from models_pipeline.video_input import VideoOpenError, validate_video
 
 
 def test_clamp_inside_frame():

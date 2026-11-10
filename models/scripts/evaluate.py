@@ -9,10 +9,10 @@ import time
 
 import cv2
 
-from plateguard.config import PlateGuardConfig
-from plateguard.ocr_engine import PlateOCR
-from plateguard.preprocess import preprocess
-from plateguard.results import merge_lines, normalise_text
+from models_pipeline.config import PlateGuardConfig
+from models_pipeline.ocr_engine import PlateOCR
+from models_pipeline.preprocess import preprocess
+from models_pipeline.results import merge_lines, normalise_text
 
 
 def levenshtein(a: str, b: str) -> int:
@@ -37,7 +37,9 @@ def eval_ocr(manifest):
     ocr = PlateOCR(cfg.ocr)
     n = correct = edits = chars = 0
     t_ocr = 0.0
-    for row in csv.reader(open(manifest)):
+    with open(manifest, newline="", encoding="utf-8") as mf:
+        rows = list(csv.reader(mf))
+    for row in rows:
         path, gt = row[0], normalise_text(row[1])
         img = cv2.imread(path)
         if img is None or not gt:
@@ -55,7 +57,7 @@ def eval_ocr(manifest):
 
 
 def eval_system(weights, video):
-    from plateguard import PlateGuard
+    from models_pipeline import PlateGuard
     cfg = PlateGuardConfig()
     cfg.detector.weights_path = weights
     pg = PlateGuard(cfg)

@@ -24,8 +24,16 @@ def group_key(file_name: str) -> str:
 # ------------------------------------------------------------------------------
 
 
+def unique_stem(file_name: str) -> str:
+    """Flat, collision-free name from the file's relative path, so cam1/001.jpg and
+    cam2/001.jpg become cam1__001 and cam2__001 instead of overwriting each other."""
+    rel = os.path.splitext(os.path.normpath(file_name))[0]
+    return rel.replace(os.sep, "__").replace("/", "__").replace(" ", "_")
+
+
 def coco_to_yolo():
-    coco = json.load(open(COCO_JSON))
+    with open(COCO_JSON, encoding="utf-8") as f:
+        coco = json.load(f)
     imgs = {i["id"]: i for i in coco["images"]}
     labels = defaultdict(list)
     for a in coco["annotations"]:
@@ -61,9 +69,14 @@ def write_dataset():
         for k in keys:
             for iid in groups[k]:
                 fn = imgs[iid]["file_name"]
-                stem = os.path.splitext(os.path.basename(fn))[0]
-                shutil.copy(os.path.join(IMAGES_DIR, fn), f"{OUT_DIR}/images/{split}/{os.path.basename(fn)}")
-                open(f"{OUT_DIR}/labels/{split}/{stem}.txt", "w").write("\n".join(labels[iid]))
+                stem = unique_stem(fn)
+                ext = os.path.splitext(fn)[1]
+                dst_img = f"{OUT_DIR}/images/{split}/{stem}{ext}"
+                if os.path.exists(dst_img):                  # never silently overwrite
+                    raise FileExistsError(f"Name collision: {dst_img}")
+                shutil.copy(os.path.join(IMAGES_DIR, fn), dst_img)
+                with open(f"{OUT_DIR}/labels/{split}/{stem}.txt", "w", encoding="utf-8") as lf:
+                    lf.write("\n".join(labels[iid]))
     print({s: sum(len(groups[k]) for k in ks) for s, ks in split_keys.items()})
 
 

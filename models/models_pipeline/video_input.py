@@ -8,7 +8,7 @@ import numpy as np
 
 from .config import VideoConfig
 
-log = logging.getLogger("plateguard")
+log = logging.getLogger("models")
 
 
 class VideoOpenError(Exception):
