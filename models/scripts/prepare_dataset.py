@@ -1,0 +1,71 @@
+"""Dataset preparation helpers (Section 4.1.2.6): COCO -> YOLO conversion and
+leakage-free group-level splitting. Dataset paths/names are left blank on purpose."""
+import json
+import os
+import random
+import shutil
+from collections import defaultdict
+
+# ---- fill in -----------------------------------------------------------------
+COCO_JSON   = "____________________"    # annotation file of the IURS/NPDS dataset
+IMAGES_DIR  = "____________________"
+OUT_DIR     = "____________________"
+SPLIT       = (0.7, 0.2, 0.1)           # train / val / test
+SEED        = 42
+PLATE_CAT_IDS = None                    # None = treat every annotation as the plate class
+
+
+def group_key(file_name: str) -> str:
+    """Return an ID shared by ALL images derived from the same source image / vehicle
+    / video sequence (incl. augmented copies), so they never cross splits.
+    TODO: adapt to your dataset's file-naming scheme."""
+    stem = os.path.splitext(os.path.basename(file_name))[0]
+    return stem                          # placeholder: every image is its own group
+# ------------------------------------------------------------------------------
+
+
+def coco_to_yolo():
+    coco = json.load(open(COCO_JSON))
+    imgs = {i["id"]: i for i in coco["images"]}
+    labels = defaultdict(list)
+    for a in coco["annotations"]:
+        if PLATE_CAT_IDS and a["category_id"] not in PLATE_CAT_IDS:
+            continue
+        im = imgs[a["image_id"]]
+        x, y, w, h = a["bbox"]           # COCO: top-left x, y, width, height (pixels)
+        if w <= 0 or h <= 0:
+            continue
+        cx, cy = (x + w / 2) / im["width"], (y + h / 2) / im["height"]
+        labels[im["id"]].append(f"0 {cx:.6f} {cy:.6f} {w / im['width']:.6f} {h / im['height']:.6f}")
+    return imgs, labels
+
+
+def group_split(imgs, labels):
+    groups = defaultdict(list)
+    for iid, im in imgs.items():
+        if iid in labels:
+            groups[group_key(im["file_name"])].append(iid)
+    keys = sorted(groups)
+    random.Random(SEED).shuffle(keys)
+    n = len(keys)
+    a, b = int(SPLIT[0] * n), int((SPLIT[0] + SPLIT[1]) * n)
+    return {"train": keys[:a], "val": keys[a:b], "test": keys[b:]}, groups
+
+
+def write_dataset():
+    imgs, labels = coco_to_yolo()
+    split_keys, groups = group_split(imgs, labels)
+    for split, keys in split_keys.items():
+        os.makedirs(f"{OUT_DIR}/images/{split}", exist_ok=True)
+        os.makedirs(f"{OUT_DIR}/labels/{split}", exist_ok=True)
+        for k in keys:
+            for iid in groups[k]:
+                fn = imgs[iid]["file_name"]
+                stem = os.path.splitext(os.path.basename(fn))[0]
+                shutil.copy(os.path.join(IMAGES_DIR, fn), f"{OUT_DIR}/images/{split}/{os.path.basename(fn)}")
+                open(f"{OUT_DIR}/labels/{split}/{stem}.txt", "w").write("\n".join(labels[iid]))
+    print({s: sum(len(groups[k]) for k in ks) for s, ks in split_keys.items()})
+
+
+if __name__ == "__main__":
+    write_dataset()
