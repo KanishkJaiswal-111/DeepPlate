@@ -49,6 +49,10 @@ def merge_lines(lines: List[OCRLine], min_chars: int = 1) -> Optional[PlateResul
             weights.append(len(t))
             confs.append(l.confidence)
     text = "".join(texts)
+    # Strip leading "IND" country identifier if followed by state code (e.g. INDRJ14CV0002 -> RJ14CV0002)
+    cleaned_text = re.sub(r"^IND(?=[A-Z]{2}\d)", "", text)
+    if cleaned_text:
+        text = cleaned_text
     if len(text) < min_chars:
         return None
     conf = float(np.average(confs, weights=weights))

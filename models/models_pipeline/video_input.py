@@ -34,8 +34,9 @@ def extract_frames(path: str, cfg: VideoConfig) -> Iterator[Tuple[int, float, np
             raise VideoOpenError("Video could not be opened (corrupt or unsupported codec).")
         fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
         total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        # Some formats (MKV, streams) report FRAME_COUNT=0; that is not an error.
         if total == 0:
-            raise VideoOpenError("Video contains no frames.")
+            log.warning("Video FRAME_COUNT unavailable — will read until EOF (streaming/container format).")
         log.info("Video: %dx%d, %.2f fps, %d frames",
                  int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
                  int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)), fps, total)

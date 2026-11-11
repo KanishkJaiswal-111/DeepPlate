@@ -1,14 +1,26 @@
 """HTTP API for number-plate image inference."""
 import logging
 import os
+import sys
+import tempfile
 from contextlib import asynccontextmanager
 from pathlib import Path
 from threading import Lock
 from typing import Annotated, Optional
 
+os.environ.setdefault("PADDLE_PDX_CACHE_HOME", os.path.join(tempfile.gettempdir(), "paddlex"))
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(tempfile.gettempdir(), "matplotlib"))
+os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
+
+# Ensure models directory is on sys.path so models_pipeline is always importable
+MODELS_DIR = Path(__file__).resolve().parent
+if str(MODELS_DIR) not in sys.path:
+    sys.path.insert(0, str(MODELS_DIR))
+
 import cv2
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.concurrency import run_in_threadpool
 
 log = logging.getLogger("plateguard.api")
@@ -89,6 +101,13 @@ def create_app(inference: Optional[PlateInference] = None) -> FastAPI:
         yield
 
     app = FastAPI(title="PlateGuard Inference API", version="1.0.0", lifespan=lifespan)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     @app.get("/health")
     async def health():
