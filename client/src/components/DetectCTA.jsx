@@ -56,7 +56,7 @@ export default function DetectCTA() {
             </p>
 
             <a
-              href={ROUTES.predict}
+              href={ROUTES.demo}
               className={`${FONT.tech} group mt-8 inline-flex items-center justify-center gap-3 rounded-md bg-[#FFD600] px-8 py-4 text-xl font-bold uppercase tracking-[0.18em] text-[#111111] shadow-[6px_6px_0_0_#ffffff] transition-all duration-200 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_0_#ffffff] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:px-10 sm:text-2xl`}
             >
               Start Detection

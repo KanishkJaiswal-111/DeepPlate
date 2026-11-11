@@ -33,7 +33,7 @@ export default function AboutCTA() {
 
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <a
-                    href={ROUTES.predict}
+                    href={ROUTES.demo}
                     className={`${FONT.tech} inline-flex items-center gap-3 rounded-md bg-[#FFD600] px-8 py-4 text-lg font-bold uppercase tracking-[0.16em] text-[#111111] shadow-[6px_6px_0_0_#ffffff] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0_0_#ffffff]`}
                   >
                     Start Number Plate Detection

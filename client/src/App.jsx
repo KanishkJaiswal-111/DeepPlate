@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import LandingPage from "./pages/LandingPage";
-import AboutPage from "./pages/AboutPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
+import PredictionPage from "./pages/PredictionPage";
 
 export default function App() {
   const [pathname, setPathname] = useState(() => {
@@ -18,8 +19,14 @@ export default function App() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  if (pathname === "/about" || pathname === "/about/") {
-    return <AboutPage />;
+  const path = pathname.replace(/\/$/, "") || "/";
+
+  if (path === "/how-it-works") {
+    return <HowItWorksPage />;
+  }
+
+  if (path === "/demo") {
+    return <PredictionPage />;
   }
 
   return <LandingPage />;

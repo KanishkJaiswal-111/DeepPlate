@@ -56,7 +56,7 @@ export default function AboutHero() {
               </a>
               <span className={`${FONT.mono} text-xs text-[#111111]/40`}>/</span>
               <span className={`${FONT.mono} text-xs font-bold uppercase tracking-[0.2em] text-[#111111]`}>
-                About PlateGuard
+                How It Works
               </span>
             </div>
 
@@ -78,7 +78,7 @@ export default function AboutHero() {
           </Reveal>
           <Reveal delay={200}>
             <h1 className={`${FONT.display} mt-3 text-[clamp(2.8rem,9vw,8rem)] leading-[0.9] text-[#111111]`}>
-              PLATEGUARD <br />
+              DEEPPLATE <br />
               <span className="inline-block -rotate-1 rounded-md border-4 border-[#111111] bg-[#FFD600] px-3 pb-1 pt-2 shadow-[6px_6px_0_0_#111111] sm:px-5 sm:shadow-[8px_8px_0_0_#111111]">
                 ANPR ARCHITECTURE.
               </span>

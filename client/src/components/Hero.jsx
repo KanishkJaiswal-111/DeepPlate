@@ -64,10 +64,10 @@ export default function Hero() {
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              href={ROUTES.about}
+              href={ROUTES.demo}
               className={`${FONT.tech} inline-flex items-center gap-2 rounded-md border-2 border-[#111111] bg-[#FFD600] px-6 py-3 text-base font-bold uppercase tracking-[0.16em] text-[#111111] shadow-[4px_4px_0_0_#111111] transition-all duration-200 hover:bg-[#111111] hover:text-[#FFD600] hover:shadow-[2px_2px_0_0_#111111] active:translate-x-0.5 active:translate-y-0.5`}
             >
-              System Overview & Architecture
+              Try the Demo
               <Cpu className="h-4 w-4" />
             </a>
           </div>
@@ -91,7 +91,7 @@ export default function Hero() {
                 </h3>
               </div>
               <a
-                href={ROUTES.workflow}
+                href={ROUTES.howItWorks}
                 className={`${FONT.tech} inline-flex items-center gap-2 rounded-md border-2 border-[#111111] bg-[#FFD600] px-5 py-2.5 text-base font-bold uppercase tracking-[0.16em] text-[#111111] shadow-[4px_4px_0_0_#111111] transition-all hover:bg-white hover:shadow-[2px_2px_0_0_#111111]`}
               >
                 Interactive 5-Stage Deep Dive
@@ -143,7 +143,7 @@ export default function Hero() {
                 </div>
 
                 <a
-                  href={ROUTES.about}
+                  href={ROUTES.howItWorks}
                   className={`${FONT.tech} inline-flex shrink-0 items-center gap-3 rounded-md bg-[#FFD600] px-7 py-3.5 text-lg font-bold uppercase tracking-[0.16em] text-[#111111] shadow-[4px_4px_0_0_#ffffff] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#ffffff]`}
                 >
                   Learn How It Works

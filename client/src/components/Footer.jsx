@@ -4,8 +4,8 @@ import { FONT } from "../constants/ui";
 
 const LINKS = [
   { label: "Home", href: ROUTES.home },
-  { label: "About", href: ROUTES.about },
   { label: "How It Works", href: ROUTES.howItWorks },
+  { label: "Demo", href: ROUTES.demo },
   { label: "Contact", href: ROUTES.contact },
 ];
 
