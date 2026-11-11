@@ -70,7 +70,7 @@ export default function Showcase() {
           </ul>
 
           <a
-            href={ROUTES.problem}
+            href={`${ROUTES.howItWorks}#problem`}
             className={`${FONT.tech} inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-[#FFD600] underline-offset-4 hover:underline sm:text-base`}
           >
             Read Problem Statement & Solutions
