@@ -2,7 +2,9 @@
 export const ROUTES = {
   // Page routes
   home: "/",
+  about: "/about",
   howItWorks: "/how-it-works",
+  predict: "/predict",
   demo: "/demo",
 
   // In-page anchors (used within their respective pages)
@@ -13,9 +15,4 @@ export const ROUTES = {
   outputs: "#outputs",
   objectives: "#objectives",
   contact: "#contact",
-<<<<<<< HEAD
-  predict: "/predict",
-  demo: "/predict",
-=======
->>>>>>> main
 };

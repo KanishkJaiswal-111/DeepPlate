@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import LandingPage from "./pages/LandingPage";
-<<<<<<< HEAD
 import AboutPage from "./pages/AboutPage";
-=======
 import HowItWorksPage from "./pages/HowItWorksPage";
->>>>>>> main
 import PredictionPage from "./pages/PredictionPage";
 
 export default function App() {
@@ -25,15 +22,15 @@ export default function App() {
 
   const path = pathname.replace(/\/$/, "") || "/";
 
+  if (path === "/about") {
+    return <AboutPage />;
+  }
+
   if (path === "/how-it-works") {
     return <HowItWorksPage />;
   }
 
-  if (path === "/demo") {
-    return <PredictionPage />;
-  }
-
-  if (pathname === "/predict" || pathname === "/predict/" || pathname === "/demo" || pathname === "/demo/") {
+  if (path === "/predict" || path === "/demo") {
     return <PredictionPage />;
   }
 
