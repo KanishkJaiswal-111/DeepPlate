@@ -44,7 +44,7 @@ def merge_lines(lines: List[OCRLine], min_chars: int = 1) -> Optional[PlateResul
     texts, weights, confs = [], [], []
     for l in order_lines(lines):
         t = normalise_text(l.text)
-        if t:
+        if t and t != "IND":
             texts.append(t)
             weights.append(len(t))
             confs.append(l.confidence)

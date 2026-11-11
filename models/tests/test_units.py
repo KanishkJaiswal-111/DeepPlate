@@ -39,6 +39,13 @@ def test_empty_merge_none():
     assert merge_lines([]) is None
 
 
+def test_merge_lines_excludes_country_mark():
+    lines = [OCRLine("HR26DN5018", 1.0, 60, 30, 12), OCRLine("IND", 1.0, 60, 45, 8)]
+    result = merge_lines(lines)
+    assert result.plate_text == "HR26DN5018"
+    assert result.ocr_confidence == pytest.approx(1.0)
+
+
 def test_dedup_keeps_best():
     out = deduplicate([PlateResult("A1", .5), PlateResult("A1", .9), PlateResult("B2", .6)])
     assert {r.plate_text: r.ocr_confidence for r in out} == {"A1": .9, "B2": .6}

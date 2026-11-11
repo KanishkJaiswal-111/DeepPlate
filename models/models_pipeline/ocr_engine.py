@@ -27,6 +27,7 @@ class PlateOCR:
                 use_doc_unwarping=cfg.use_doc_unwarping,
                 use_textline_orientation=cfg.use_textline_orientation,
                 device=cfg.device,
+                enable_mkldnn=cfg.enable_mkldnn,
             )
             self.v3 = True
         except TypeError:   # PaddleOCR 2.x

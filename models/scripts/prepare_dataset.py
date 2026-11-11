@@ -16,11 +16,17 @@ PLATE_CAT_IDS = None                    # None = treat every annotation as the p
 
 
 def group_key(file_name: str) -> str:
-    """Return an ID shared by ALL images derived from the same source image / vehicle
-    / video sequence (incl. augmented copies), so they never cross splits.
-    TODO: adapt to your dataset's file-naming scheme."""
+    """Same original photo must always get the same key, so its copies stay in one split.
+
+    NPDS was exported from Roboflow. Each photo was saved several times (flips,
+    rotations, noise) under names like car12.rf.9f3ab1c0.jpg. The text before
+    ".rf." is the original photo. If one copy is in train and another is in test,
+    the test score is dishonest: the model has already seen that plate.
+    """
     stem = os.path.splitext(os.path.basename(file_name))[0]
-    return stem                          # placeholder: every image is its own group
+    if ".rf." in stem:
+        stem = stem.split(".rf.")[0]
+    return stem
 # ------------------------------------------------------------------------------
 
 

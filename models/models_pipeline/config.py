@@ -52,6 +52,7 @@ class OCRConfig:
     use_doc_orientation_classify: bool = False
     use_doc_unwarping: bool = False
     device: str = "cpu"                           # "cpu" | "gpu:0"
+    enable_mkldnn: bool = False
     min_confidence: float = 0.50                  # reject readings below this
     min_plate_chars: int = 4
 

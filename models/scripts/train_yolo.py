@@ -1,4 +1,10 @@
-"""Fine-tune YOLO on the plate dataset (Table 4.6). Fill the blanks before running."""
+"""Fine-tune YOLO on the plate dataset (Table 4.6).
+
+Run models/colab_train_plate.ipynb on a Colab T4. This file is the same
+configuration for a machine that already has the dataset and an NVIDIA GPU.
+Do not run it on a laptop CPU, and do not run it after the notebook: the test
+split is only evaluated once.
+"""
 import random
 
 import numpy as np
@@ -7,22 +13,27 @@ from ultralytics import YOLO
 
 # ---- fill in -----------------------------------------------------------------
 DATA_YAML   = "configs/plate_data.yaml"     # dataset paths go inside this file
-PRETRAINED  = "____________________"       # e.g. a pretrained YOLO .pt checkpoint
-EPOCHS      = 0                             # TODO
-BATCH       = 0                             # TODO
+PRETRAINED  = "yolov8s.pt"                  # COCO weights; Ultralytics downloads this file
+EPOCHS      = 50
+BATCH       = 16
 IMG_SIZE    = 640
 LR0         = 0.01
 OPTIMIZER   = "auto"                        # "SGD" | "Adam" | "AdamW" | "auto"
 SEED        = 42
 PROJECT     = "runs/models"
 RUN_NAME    = "plate_detector"
-DEVICE      = None                          # None=auto, "0", "cpu"
+DEVICE      = "0"                           # GPU 0. A laptop with no NVIDIA chip cannot run this.
 # ------------------------------------------------------------------------------
 
 
 def main():
+    if DEVICE != "cpu" and not torch.cuda.is_available():
+        raise SystemExit(
+            "No NVIDIA GPU on this machine. Upload models/colab_train_plate.ipynb "
+            "to Google Colab and set Runtime → Change runtime type → T4 GPU."
+        )
     random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
-    model = YOLO(PRETRAINED)                # transfer learning; single class from the data yaml
+    model = YOLO(PRETRAINED)                # start from COCO weights; one class comes from the yaml
     model.train(
         data=DATA_YAML, epochs=EPOCHS, batch=BATCH, imgsz=IMG_SIZE, lr0=LR0,
         optimizer=OPTIMIZER, seed=SEED, project=PROJECT, name=RUN_NAME, device=DEVICE,
