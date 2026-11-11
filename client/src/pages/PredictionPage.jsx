@@ -118,10 +118,19 @@ export default function PredictionPage() {
 
     const startedAt = performance.now();
     try {
-      const response = await fetch("/inference/api/predict", {
-        method: "POST",
-        body: formData,
-      });
+      let response;
+      try {
+        response = await fetch("/api/predict", {
+          method: "POST",
+          body: formData,
+        });
+      } catch {
+        // Direct proxy fallback if Express is not running
+        response = await fetch("/inference/api/predict", {
+          method: "POST",
+          body: formData,
+        });
+      }
       const body = await response.json();
       if (!response.ok) {
         throw new Error(body.detail || "Inference request failed.");
@@ -134,8 +143,8 @@ export default function PredictionPage() {
     } catch (error) {
       setInferenceError(
         error instanceof Error
-          ? `${error.message} Check that the Python API is running on port 8000.`
-          : "Inference failed. Check that the Python API is running on port 8000.",
+          ? error.message
+          : "Inference failed. Check that the server and ML API are running.",
       );
     } finally {
       setIsScanning(false);

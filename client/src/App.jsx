@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import LandingPage from "./pages/LandingPage";
+<<<<<<< HEAD
 import AboutPage from "./pages/AboutPage";
+=======
+import HowItWorksPage from "./pages/HowItWorksPage";
+>>>>>>> main
 import PredictionPage from "./pages/PredictionPage";
 
 export default function App() {
@@ -19,11 +23,17 @@ export default function App() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  if (pathname === "/about" || pathname === "/about/") {
-    return <AboutPage />;
+  const path = pathname.replace(/\/$/, "") || "/";
+
+  if (path === "/how-it-works") {
+    return <HowItWorksPage />;
   }
 
-  if (pathname === "/predict" || pathname === "/predict/") {
+  if (path === "/demo") {
+    return <PredictionPage />;
+  }
+
+  if (pathname === "/predict" || pathname === "/predict/" || pathname === "/demo" || pathname === "/demo/") {
     return <PredictionPage />;
   }
 
